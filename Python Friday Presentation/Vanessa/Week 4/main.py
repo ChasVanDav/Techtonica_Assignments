@@ -1,12 +1,20 @@
 """
 Calculator Program
 """
+
+""" The helper functions are in their own, separate file called 'math', for reusability """
+from math import add_numbers, subtract_numbers, multiply_numbers, divide_numbers
+
+
 def main():
     """
     Main function that serves as the entry point for the program.
     Displays a menu, takes user input, and calls the appropriate functions.
     """
     print("Welcome to the Basic Calculator!")
+    """
+    a control flow statement that creates an infinite loop until user explicitly exits the program
+    """
     while True:
         print("\nMenu:")
         print("1. Add")
@@ -14,6 +22,11 @@ def main():
         print("3. Multiply")
         print("4. Divide")
         print("5. Exit")
+
+""" 
+try/catch to handle all input cases 
+
+"""
 
         try:
             choice = int(input("Choose an operation (1-5): "))
