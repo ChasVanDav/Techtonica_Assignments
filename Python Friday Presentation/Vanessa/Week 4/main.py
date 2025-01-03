@@ -1,29 +1,21 @@
 #Calculator Program
-
 # n.b. The helper functions are in their own, separate file called 'math', for reusability
 from math import add_numbers, subtract_numbers, multiply_numbers, divide_numbers
-
-
 def calculator():
-    #Displays a menu, takes user input, and calls the appropriate functions.
-
+    #Displays a menu, takes user input, and calls the appropriate math functions.
     print("\nWelcome to Vanessa's Calculator Program!")
-   
     while True:
     #a control flow statement that creates an infinite loop until user explicitly exits the program
-
         print("\nCalculator Menu:")
         print("\n1. Add")
         print("2. Subtract")
         print("3. Multiply")
         print("4. Divide")
         print("5. Exit")
-
         try:
         #try/catch to handle all input cases, including outside of 1-5 and non-numbers
             #require value of input to be an integer
             choice = int(input("Choose an operation (1-5): "))
-
             if choice == 5:
                 print("Thank you for using the calculator. Goodbye!")
                 break
@@ -49,8 +41,6 @@ def calculator():
         #default error handling for any other cases not handled above
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
-
-
 # Main execution
 if __name__ == "__main__":
     calculator()
