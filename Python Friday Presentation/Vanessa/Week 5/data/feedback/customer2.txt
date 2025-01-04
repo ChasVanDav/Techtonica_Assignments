@@ -1,0 +1,6 @@
+Title: Customer Feedback
+Name: Amanda Clint
+Item Purchased: Oven Mitts
+Rating: 2
+Would Purchase Again: False
+Comments: Though these oven mitts have a cute design, they are way too thin and do not insulate against heat well.

@@ -1,0 +1,6 @@
+Title: Customer Feedback
+Name: Janet Brown
+Item Purchased: Sofa Chair
+Rating: 4
+Would Purchase Again: True
+Comments: This is the most comfortable chair ever! 
