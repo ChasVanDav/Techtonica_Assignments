@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Files</title>
+</head>
+<body>
+    <h1>Feedback Files</h1>
+    <!-- A brief explanation for the user -->
+    <p>Below is a list of customer feedback files. Click on a file to view its content.</p>
+    <ul>
+        <!-- Loop through the list of files provided by the Flask app -->
+        {% for file in files %}
+        <!-- Create a link for each file to view its details -->
+        <li><a href="/process-feedback/{{ file }}">{{ file }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
