@@ -5,9 +5,8 @@ from flask import Flask, request, jsonify, render_template # web framework (like
 # Create a Flask app
 app = Flask(__name__)
 
-
-def process_file(file_path):
 # Reads a text file and converts its content into a dictionary.
+def process_file(file_path):
     with open(file_path, 'r') as file:
         # Read all lines from the file
         lines = file.readlines()
