@@ -1,0 +1,45 @@
+/* Base styles for body */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: hidden;
+    background-color: lightsalmon;
+}
+
+h1 {
+    margin: 0;                    /* Remove default margin */
+    text-align: center;           /* Align text to the center */
+}
+
+/* Section for hero images */
+#hero-images {
+    display: flex;                /* Enable Flexbox */
+    justify-content: center;      /* Center the images */
+    align-items: stretch;         /* Make heights uniform */
+    gap: 20px;                    /* Add space between images */
+    padding: 20px;
+    border-style: double;
+}
+
+/* Image styles */
+#hero-images img {
+    width: 30%;                   /* Each image takes 30% of the container */
+    height: 200px;                /* Fixed height for uniformity */
+    object-fit: cover;            /* Crop images to fit */
+    border-radius: 8px;           /* Rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for better appearance */
+}
+
+@media (max-width: 768px) {
+    #hero-images {
+        flex-direction: column;   /* Stack images vertically */
+        gap: 10px;                /* Reduce spacing between images */
+    }
+
+    #hero-images img {
+        width: 100%;              /* Make images full-width */
+        height: auto;             /* Adjust height proportionally */
+    }
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask-HTML-Test</title>
+    <!-- Link to styles.css -->
+     <!-- url_for dynamically links to files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+<body>
+    <header>
+    <h1>Vanessa's Korean Kitchen</h1>
+    </header>
+    <section id="hero-images">
+        <div>
+            <img src="{{ url_for('static', filename='images/dolsot_bibimbap.jpg') }}" alt="close-up image of dolsot bibimbap, a Korean rice dish">
+            <img src="{{ url_for('static', filename='images/banchan.jpg') }}" alt="arial view of banchan, Korean side dishes, laid out on a kitchen table">
+            <img src="{{ url_for('static', filename='images/bulgogi.jpg') }}" alt="close up view of bulgogi, Korean grilled pork">
+        </div>
+    </section>
+</body>
+</html>
