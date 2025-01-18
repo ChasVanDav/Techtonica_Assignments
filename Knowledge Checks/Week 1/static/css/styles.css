@@ -32,6 +32,16 @@ h1 {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for better appearance */
 }
 
+#subheaders {
+    display: flex;                /* Enable Flexbox */
+    justify-content: center;      /* Center the images */
+    align-items: stretch;         /* Make heights uniform */
+    gap: 20px;                    /* Add space between images */
+    padding: 20px;
+    border-style: double;
+}
+
+
 @media (max-width: 768px) {
     #hero-images {
         flex-direction: column;   /* Stack images vertically */

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask-HTML-Test</title>
+    <title>KoreanDishes</title>
     <!-- Link to styles.css -->
      <!-- url_for dynamically links to files -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
@@ -19,6 +19,21 @@
             <img src="{{ url_for('static', filename='images/banchan.jpg') }}" alt="arial view of banchan, Korean side dishes, laid out on a kitchen table">
             <img src="{{ url_for('static', filename='images/bulgogi.jpg') }}" alt="close up view of bulgogi, Korean grilled pork">
         </div>
+    </section>
+
+    <section id="article-title">
+        <div>
+            <h1>Most Popular Korean Dishes Ranked</h1>
+        </div>
+    </section>
+
+    <section id="subheaders">
+        <ol>
+            <!-- Loop through the subheaders passed from Flask -->
+            {% for subheader in subheaders %}
+                <li>{{ subheader.text }}</li>
+            {% endfor %}
+        </ol>
     </section>
 </body>
 </html>
