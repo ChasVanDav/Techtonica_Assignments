@@ -1,1 +1,0 @@
--- Modify the query to include the department name in the results as well, you can adjust the SELECT statement to include the department name from the department table

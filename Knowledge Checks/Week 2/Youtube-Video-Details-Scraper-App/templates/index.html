@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube Video Details Scraper</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">YouTube Video Details Scraper</h1>
+
+      <!-- Form to input YouTube video URL -->
+      <div class="card">
+        <div class="card-body">
+          <form action="{{ url_for('start_scraping') }}" method="POST">
+            <div class="form-group">
+              <label for="video_url">YouTube Video URL:</label>
+              <input
+                type="text"
+                id="video_url"
+                name="video_url"
+                class="form-control"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Start Scraping
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- Display the fetched video details -->
+      <h2>Fetched Video Details</h2>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Published At</th>
+              <th>Channel Title</th>
+              <th>View Count</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for video in video_details %}
+            <tr>
+              <td>{{ video.title }}</td>
+              <td>{{ video.description[:100] }}</td>
+              <td>{{ video.published_at }}</td>
+              <td>{{ video.channel_title }}</td>
+              <td>{{ video.view_count }}</td>
+              <td>
+                <!-- Delete Form -->
+                <form
+                  action="{{ url_for('delete_video', video_id=video.id) }}"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <button type="submit" class="btn btn-sm btn-danger mt-2">
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
