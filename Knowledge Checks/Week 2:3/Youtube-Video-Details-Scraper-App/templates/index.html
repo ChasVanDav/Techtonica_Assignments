@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube Video Details Scraper</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">YouTube Video Details Scraper</h1>
+
+      <!-- Search Form -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <form action="{{ url_for('search_video') }}" method="GET">
+            <div class="input-group">
+              <input
+                type="text"
+                name="query"
+                class="form-control"
+                placeholder="Search by YouTube video title"
+                required
+              />
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Display search results if video exists -->
+      {% if search_query %}
+      <h4>Search Results for: <strong>{{ search_query }}</strong></h4>
+
+      {% if video_details %}
+      <!-- Displaying the video details if applicable-->
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Published At</th>
+              <th>Channel Title</th>
+              <th>View Count</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for video in video_details %}
+            <tr>
+              <td>{{ video.title }}</td>
+              <td>{{ video.description[:100] }}...</td>
+              <td>{{ video.published_at }}</td>
+              <td>{{ video.channel_title }}</td>
+              <td>{{ video.view_count }}</td>
+              <td>
+                <!-- Delete Form -->
+                <form
+                  action="{{ url_for('delete_video', video_id=video.id) }}"
+                  method="POST"
+                  style="display: inline"
+                >
+                  <button type="submit" class="btn btn-sm btn-danger">
+                    Delete
+                  </button>
+                </form>
+
+                <!-- Edit Form -->
+                <a
+                  href="{{ url_for('edit_video', video_id=video.id) }}"
+                  class="btn btn-sm btn-warning"
+                >
+                  Edit Title
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <!-- If no video is found, show a message with option to scrape (Implement client-side form validation)-->
+      <div class="alert alert-warning">
+        No video found with this title.
+        <a href="#" data-toggle="modal" data-target="#scrapeModal"
+          >Click here</a
+        >
+        to scrape it.
+      </div>
+      {% endif %} {% endif %}
+
+      <!-- Modal to scrape a new video -->
+      <div
+        class="modal fade"
+        id="scrapeModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="scrapeModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="scrapeModalLabel">
+                Scrape a New YouTube Video
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="{{ url_for('start_scraping') }}" method="POST">
+                <div class="form-group">
+                  <label for="video_url">YouTube Video URL:</label>
+                  <input
+                    type="text"
+                    id="video_url"
+                    name="video_url"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Start Scraping
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
