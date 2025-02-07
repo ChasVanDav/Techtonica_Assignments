@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Korean Dishes</title>
+    <!-- Link to styles.css -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Vanessa's Korean Kitchen</h1>
+    </header>
+    <section id="hero-images">
+      <div>
+        <img
+          src="{{ url_for('static', filename='images/dolsot_bibimbap.jpg') }}"
+          alt="dolsot bibimbap"
+        />
+        <img
+          src="{{ url_for('static', filename='images/banchan.jpg') }}"
+          alt="banchan"
+        />
+        <img
+          src="{{ url_for('static', filename='images/bulgogi.jpg') }}"
+          alt="bulgogi"
+        />
+      </div>
+    </section>
+
+    <section id="article-title">
+      <h1>Most Popular Korean Dishes Ranked</h1>
+    </section>
+
+    <section id="subheaders">
+      <ol>
+        <!-- Loop through the subheaders passed from Flask -->
+        {% for subheader in subheaders %}
+        <li>
+          <!-- On click, pass the subheader text to the get_video route -->
+          <a href="{{ url_for('get_video', title=subheader) }}">
+            {{ subheader }}
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+  </body>
+</html>
