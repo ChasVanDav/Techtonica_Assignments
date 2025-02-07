@@ -1,17 +1,12 @@
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column, Integer, String, JSON
+from database import Base
 
-db = SQLAlchemy()
+class Recipe(Base):
+    __tablename__ = "recipes"
 
-class VideoDetail(db.Model):
-    __tablename__ = 'video_details'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    published_at = db.Column(db.DateTime, nullable=False)
-    channel_title = db.Column(db.String(255), nullable=False)
-    view_count = db.Column(db.Integer, nullable=False)
-
-    def __repr__(self):
-        return f"<VideoDetail {self.title}: {self.view_count} views>"
-
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    recipe_title = Column(String, unique=True, nullable=False)
+    video_id = Column(String, nullable=True)
+    video_url = Column(String, nullable=True)
+    video_title = Column(String, nullable=True)
+    metadata = Column(JSON, nullable=True)  # Stores video details like views, duration
