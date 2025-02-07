@@ -2,6 +2,10 @@
 
 This is a Flask web application that scrapes recipe titles from a CNN article and displays YouTube video details based on recipe titles. Users can view the embedded YouTube video and details such as title, views, channel name, and publish date.
 
+![Homepage with list of recipes](static/images/homepage_screenshot.png)
+
+![Video for recipe title on click](static/images/video_screenshot.png)
+
 ## 🚀 Tech Stack
 
 - **Backend:** Flask, Flask-SQLAlchemy
@@ -85,3 +89,19 @@ Access the app at: `http://127.0.0.1:5000/`
 ## 📜 License
 
 This project is licensed under the MIT License.
+
+Knowledge Check Instructions for reference
+
+# Week 4: RESTful API Integration
+
+# Learning Objective: Integrate with external RESTful APIs
+
+# Requirements:
+
+    # Choose an external API to work with (e.g., weather API, stock market API)
+    # Implement API calls using requests library
+    # Store API data alongside scraped data
+    # Create routes to fetch and display API data
+    # Build up your README to include set up instructions, description, and a visual of your application in action
+
+![Database Tables with Recent Data](static/images/database_screenshot.png)
