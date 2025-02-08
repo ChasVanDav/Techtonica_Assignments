@@ -1,9 +1,0 @@
-Flask
-Flask-SQLAlchemy
-psycopg2-binary
-google-api-python-client
-google-auth-oauthlib
-oauth2client
-python-dotenv
-Flask-Migrate
-Flask-Limiter
