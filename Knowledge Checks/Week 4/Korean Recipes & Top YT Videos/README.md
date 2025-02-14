@@ -96,12 +96,12 @@ Knowledge Check Instructions for reference
 
 # Learning Objective: Integrate with external RESTful APIs
 
-# Requirements:
+### Requirements:
 
-    # Choose an external API to work with (e.g., weather API, stock market API)
-    # Implement API calls using requests library
-    # Store API data alongside scraped data
-    # Create routes to fetch and display API data
-    # Build up your README to include set up instructions, description, and a visual of your application in action
+    - Choose an external API to work with (e.g., weather API, stock market API)
+    - Implement API calls using requests library
+    - Store API data alongside scraped data
+    - Create routes to fetch and display API data
+    - Build up your README to include set up instructions, description, and a visual of your application in action
 
 ![Database Tables with Recent Data](static/images/database_screenshot.png)

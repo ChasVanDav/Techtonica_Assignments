@@ -4,3 +4,5 @@ psycopg2-binary
 google-api-python-client
 python-dotenv
 requests
+requests-mock
+bs4

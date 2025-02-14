@@ -29,7 +29,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/tpl522_6/Desktop/Youtube-Livechat-Scraper-App/venv"
+set -gx VIRTUAL_ENV "/Users/tpl522_6/Desktop/Techtonica_Assignments/Knowledge Checks/Week 4/Korean Recipes & Top YT Videos/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

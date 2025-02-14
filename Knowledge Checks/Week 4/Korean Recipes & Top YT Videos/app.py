@@ -1,11 +1,13 @@
 import os
+import logging
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for
 from sqlalchemy.orm import Session
 import requests
 from webscraper import get_subheaders
-from models import Recipe  # Assuming your Recipe model is in models.py
-from database import SessionLocal, engine  # Assuming your SessionLocal and engine are in database.py
+from models import Recipe 
+from database import SessionLocal, engine
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -16,46 +18,61 @@ YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 # Flask app setup
 app = Flask(__name__)
 
-# Function to search for YouTube videos
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
+
 def search_youtube(query):
-    # Make an API call to search for the video
-    youtube_url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={query}&key={YOUTUBE_API_KEY}&maxResults=1"
-    response = requests.get(youtube_url)
-    video_data = response.json()
-    
-    if 'items' in video_data:
-        video = video_data['items'][0]
-        video_id = video['id']['videoId']
-        video_url = f"https://www.youtube.com/watch?v={video_id}"
-        video_title = video['snippet']['title']
-        channel_title = video['snippet']['channelTitle']
-        published_at = video['snippet']['publishedAt']
+    try:
+        # Make an API call to search for the video
+        youtube_url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={query}&key={YOUTUBE_API_KEY}&maxResults=5"
+        response = requests.get(youtube_url)
+        video_data = response.json()
 
-        # Now fetch the video statistics (e.g., view count)
-        stats_url = f"https://www.googleapis.com/youtube/v3/videos?part=statistics&id={video_id}&key={YOUTUBE_API_KEY}"
-        stats_response = requests.get(stats_url)
-        stats_data = stats_response.json()
-        
-        view_count = None
-        if 'items' in stats_data:
-            view_count = stats_data['items'][0]['statistics'].get('viewCount', 0)
-        
-        # Create metadata to store in the database
-        video_metadata = {
-            'channelTitle': channel_title,
-            'publishedAt': published_at,
-            'viewCount': view_count
-        }
+        # Log the response for debugging purposes
+        logging.debug("Response from YouTube API: %s", video_data)
 
-        return video_id, video_url, video_title, video_metadata
-    return None, None, None, None
+        # print("Response from YouTube API:", video_data)
+
+        # Loop through items until a youtube#video is found
+        for video in video_data.get('items', []):
+            # Check if the result is a video (not a channel)
+            if video.get('id', {}).get('kind') == 'youtube#video':
+                video_id = video['id'].get('videoId', None)
+                if video_id:  # Ensure video_id exists
+                    video_url = f"https://www.youtube.com/watch?v={video_id}"
+                    video_title = video['snippet']['title']
+                    channel_title = video['snippet']['channelTitle']
+                    published_at = video['snippet']['publishedAt']
+
+                    # Now fetch the video statistics (e.g., view count)
+                    stats_url = f"https://www.googleapis.com/youtube/v3/videos?part=statistics&id={video_id}&key={YOUTUBE_API_KEY}"
+                    stats_response = requests.get(stats_url)
+                    stats_data = stats_response.json()
+
+                    view_count = None
+                    if 'items' in stats_data:
+                        view_count = stats_data['items'][0]['statistics'].get('viewCount', 0)
+
+                    # Create metadata to store in the database
+                    video_metadata = {
+                        'channelTitle': channel_title,
+                        'publishedAt': published_at,
+                        'viewCount': view_count
+                    }
+
+                    return video_id, video_url, video_title, video_metadata
+
+    except requests.RequestException as e:
+        logging.error("Error making YouTube API request: %s", e)
+        # If no video found, return None
+        return None, None, None, None
+
 
 def clean_subheader(title):
     """
     Clean the subheader text by removing unwanted characters like quotes, parentheses, etc.
     Modify this function as needed to handle specific cleaning rules.
     """
-    # Example of cleaning unwanted characters: removing quotes, parentheses, etc.
     cleaned_title = title.replace('“', '').replace('”', '')  # Removing quotes
     cleaned_title = cleaned_title.replace('(', '').replace(')', '')  # Removing parentheses
     cleaned_title = cleaned_title.strip()  # Remove leading and trailing whitespace
@@ -63,6 +80,8 @@ def clean_subheader(title):
 
 @app.route('/')
 def home():
+    logging.debug('Home page is loading...')
+
     # Open a session to interact with the database
     session = SessionLocal()
 
@@ -81,7 +100,6 @@ def home():
         
         # Add the cleaned subheaders to the database
         for title in cleaned_subheader_texts:
-            # Assuming you store the title in the recipe_title column
             recipe = Recipe(recipe_title=title)
             session.add(recipe)
 
@@ -149,6 +167,20 @@ def edit_video(video_id):
 
         # If GET request, show the form with the current title
         return render_template('edit_video.html', video=video)
+
+# Custom error pages
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(e):
+    return render_template('500.html'), 500
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    return render_template('error.html'), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

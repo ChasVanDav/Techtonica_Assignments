@@ -1,9 +1,6 @@
-# database.py
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# Database connection URL (no password)
 DATABASE_URL = "postgresql://tpl522_6@localhost/postgres"
 
 # Create the engine (connects to PostgreSQL)

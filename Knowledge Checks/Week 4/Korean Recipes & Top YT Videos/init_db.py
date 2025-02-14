@@ -1,4 +1,4 @@
-# init_db.py
+# only need to run this once to create database tables
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base

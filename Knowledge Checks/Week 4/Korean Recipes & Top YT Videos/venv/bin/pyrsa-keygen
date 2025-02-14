@@ -1,4 +1,6 @@
-#!/Users/tpl522_6/Desktop/Youtube-Livechat-Scraper-App/venv/bin/python3
+#!/bin/sh
+'''exec' "/Users/tpl522_6/Desktop/Techtonica_Assignments/Knowledge Checks/Week 4/Korean Recipes & Top YT Videos/venv/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
