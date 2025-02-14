@@ -82,7 +82,6 @@ def clean_subheader(title):
 def home():
     logging.debug('Home page is loading...')
 
-    # Open a session to interact with the database
     session = SessionLocal()
 
     # Fetch all subheaders from your database
@@ -93,20 +92,26 @@ def home():
 
     # If no subheaders are found, run the web scraper and insert into the DB
     if not subheaders:
-        subheader_texts = get_subheaders()  # Call the web scraper function
-        
-        # Clean the fetched subheaders from web scraper
-        cleaned_subheader_texts = [clean_subheader(title) for title in subheader_texts]
-        
-        # Add the cleaned subheaders to the database
-        for title in cleaned_subheader_texts:
-            recipe = Recipe(recipe_title=title)
-            session.add(recipe)
+        try:
+            subheader_texts = get_subheaders()  # Call the web scraper function
+            
+            if not subheader_texts:  # Check if empty list is returned
+                raise ValueError("No data returned from web scraper.")
 
-        session.commit()  # Save to DB
-        session.close()
+            # Clean and store in the database
+            cleaned_subheader_texts = [clean_subheader(title) for title in subheader_texts]
+            for title in cleaned_subheader_texts:
+                recipe = Recipe(recipe_title=title)
+                session.add(recipe)
 
-        return render_template('index.html', subheaders=cleaned_subheader_texts)
+            session.commit()
+            session.close()
+            return render_template('index.html', subheaders=cleaned_subheader_texts)
+
+        except Exception as e:
+            logging.error(f"Web scraping failed: Incorrect URL or website issue. Error: {e}")
+            session.close()
+            return render_template('500.html', error_message="Sorry, we couldn't fetch the recipes. Please try again later.")
 
     # Close the session after fetching the data
     session.close()
@@ -141,7 +146,7 @@ def get_video(title):
             return render_template('video.html', recipe=recipe, video_id=video_id, video_metadata=video_metadata)
         
         # If no recipe found, return 404
-        return "Recipe not found", 404
+        return render_template('404.html'), 404
 
 
 @app.route('/edit_video/<int:video_id>', methods=['GET', 'POST'])
