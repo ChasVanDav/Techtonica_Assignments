@@ -1,16 +1,25 @@
-# only need to run this once to create database tables
-
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
-from database import engine, Base  # Import engine and Base from your database.py
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import inspect
+from models import Base, Recipe, Image
 
-# Create a session factory
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+DATABASE_URL = "postgresql://tpl522_6@localhost/postgres"
 
-# Define your Recipe model here
-from models import Recipe  # Import your Recipe model here
+# Create the engine
+engine = create_engine(DATABASE_URL)
 
-# This will create all the tables in the database, including 'recipes'
-Base.metadata.create_all(engine)
+# Create tables
+try:
+    print("Creating tables...")
+    Base.metadata.create_all(engine)
+    print("Tables created!")
+except Exception as e:
+    print(f"An error occurred while creating the tables: {e}")
 
-print("Database and tables created successfully.")
+
+try:
+    inspector = inspect(engine)
+    tables = inspector.get_table_names()
+    print(f"Tables in the database: {tables}")
+except Exception as e:
+    print(f"An error occurred while listing the tables: {e}")

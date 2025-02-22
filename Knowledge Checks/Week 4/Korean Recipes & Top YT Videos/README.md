@@ -1,10 +1,40 @@
 # 🍜 Korean Recipes & Top YT Videos
 
-This is a Flask web application that scrapes recipe titles from a CNN article and displays YouTube video details based on recipe titles. Users can view the embedded YouTube video and details such as title, views, channel name, and publish date.
+This is a Flask-based web application that scrapes **Korean recipe titles** from a CNN article and automatically fetches relevant **YouTube cooking videos**. Users can view recipe details, watch embedded videos, and explore metadata such as views, channel name, and publish date.
+
+## BEFORE
 
 ![Homepage with list of recipes](static/images/homepage_screenshot.png)
 
 ![Video for recipe title on click](static/images/video_screenshot.png)
+
+![Database Tables with Recent Data](static/images/database_screenshot.png)
+
+## AFTER
+
+![Homepage Top Image](static/images/homepage_after_1.png)
+
+![Homepage Bottom Image](static/images/homepage_after_2.png)
+
+![Edit Screen](static/images/edit_screen.png)
+
+## BACKEND
+
+![Recipe Database Postman GET](static/images/database_get.png)
+
+![Image Database Postman GET](static/images/database_image_upload.png)
+
+## 🎯 Features
+
+- 🔍 **Web Scraping**: Extracts Korean recipe titles from a CNN article.
+- 📺 **YouTube API Integration**: Fetches relevant cooking videos based on the recipe title.
+- 🗃 **PostgreSQL Database**: Stores scraped data and YouTube metadata.
+- 🖼 **Image Upload**: Allows users to upload images for recipes.
+- ✏️ **Edit & Delete Recipes**: Modify or remove saved recipes.
+- 📌 **Pagination & Search**: Easily browse and find recipes.
+- ⏳ **Rate Limiting**: Prevents excessive API requests and ensures smooth performance.
+
+---
 
 ## 🚀 Tech Stack
 
@@ -13,33 +43,14 @@ This is a Flask web application that scrapes recipe titles from a CNN article an
 - **API Integration:** YouTube Data API v3
 - **Other:** Python-dotenv for environment variables
 
-## 📂 Project Structure
-
-```
-YouTube-Video-Details-Scraper-App/
-│-- app.py                  # Main application file
-│-- database.py             # Database connection setup
-│-- models.py               # Database models
-│-- webscraper.py           # Web scraping utility
-│-- init_db.py              # Initialize the database
-│-- requirements.txt        # Dependencies
-│-- .env                    # Environment variables (excluded from repo)
-|-- .gitignore              # Specifies files and directories to be excluded from version control
-│-- static/
-│   ├── css/
-│   │   ├── styles.css      # Styling for the app
-│-- templates/
-│   ├── index.html          # Homepage template
-│   ├── video.html          # Video details page
-│   ├── edit_video.html     # Edit video title page
-```
+---
 
 ## 🛠️ Setup Instructions
 
 ### 1️⃣ Clone the Repository
 
 ```sh
-git clone https://github.com/yourusername/YouTube-Video-Details-Scraper-App.git
+git clone https://github.com/ChasVanDav/YouTube-Video-Details-Scraper-App.git
 cd YouTube-Video-Details-Scraper-App
 ```
 
@@ -47,7 +58,9 @@ cd YouTube-Video-Details-Scraper-App
 
 ```sh
 python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
+# Activate virtual environment:
+source venv/bin/activate
+# Install dependencies
 pip install -r requirements.txt
 ```
 
@@ -62,46 +75,46 @@ DATABASE_URL=postgresql://your_username@localhost/your_database_name
 
 ### 4️⃣ Initialize the Database
 
-Run the `init_db.py` script to initialize the database:
-
 ```sh
 python init_db.py
 ```
 
-This will create the necessary tables in your PostgreSQL database.
+If using Flask-Migrate:
+
+```sh
+flask db upgrade
+```
 
 ### 5️⃣ Run the Application
 
 ```sh
-flask run
+python app.py
 ```
 
 Access the app at: `http://127.0.0.1:5000/`
 
-## 🤝 Contributing
+---
 
-1. 🍴 Fork the repository
-2. 🌱 Create a new branch (`git checkout -b feature-branch`)
-3. 💾 Commit your changes (`git commit -m "Added new feature"`)
-4. 🚀 Push to the branch (`git push origin feature-branch`)
-5. 🔥 Open a Pull Request
+## 🫱🏾‍🫲🏻 Contributing
+
+🍴 Fork the repository
+
+🌱 Create a new branch
+
+`git checkout -b feature-branch`
+
+💾 Commit your changes
+
+`git commit -m "Added new feature"`
+
+🚀 Push to the branch
+
+`git push origin feature-branch`
+
+🔥 Open a Pull Request
+
+---
 
 ## 📜 License
 
 This project is licensed under the MIT License.
-
-Knowledge Check Instructions for reference
-
-# Week 4: RESTful API Integration
-
-# Learning Objective: Integrate with external RESTful APIs
-
-### Requirements:
-
-    - Choose an external API to work with (e.g., weather API, stock market API)
-    - Implement API calls using requests library
-    - Store API data alongside scraped data
-    - Create routes to fetch and display API data
-    - Build up your README to include set up instructions, description, and a visual of your application in action
-
-![Database Tables with Recent Data](static/images/database_screenshot.png)

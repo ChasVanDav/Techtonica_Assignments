@@ -1,16 +1,14 @@
-# This tests the webscraper "get_subheaders" function to ensure that it properly extracta text
-
 import unittest
 from webscraper import get_subheaders
 import requests_mock
 
 class TestWebScraper(unittest.TestCase):
     
-    def test_get_subheaders(self):
+    def test_get_subheaders_with_missing_content(self):
         # URL for the CNN page
         url = 'https://www.cnn.com/travel/article/best-korean-dishes/index.html'
         
-        # mock the HTML content returned from the web
+        # Mock the HTML content returned from the web
         mock_html = """
         <html>
             <body>
@@ -21,16 +19,29 @@ class TestWebScraper(unittest.TestCase):
         </html>
         """
         
-        # mock the HTTP GET request
+        # Mock the HTTP GET request
         with requests_mock.Mocker() as mock:
             mock.get(url, text=mock_html)
             
-            # call the get_subheaders function
-            subheaders = get_subheaders()
-            print("Subheaders:", subheaders)
+            # Call the function and unpack values correctly
+            subheaders, content_texts = get_subheaders()
             
-            # verify the returned subheaders are correct
+            # Check that the missing content is replaced with default
+            content_texts = [content if content else "No description available." for content in content_texts]
+
+            # Verify the returned subheaders
             self.assertEqual(subheaders, ['Bibimbap', 'Kimchi', 'Bulgogi'])
+            
+            # Ensure the content is the default value
+            self.assertEqual(content_texts, [
+                "No description available.",
+                "No description available.",
+                "No description available."
+            ])
 
 if __name__ == '__main__':
     unittest.main()
+
+
+
+
