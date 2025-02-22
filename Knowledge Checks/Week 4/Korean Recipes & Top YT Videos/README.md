@@ -24,6 +24,11 @@ This is a Flask-based web application that scrapes **Korean recipe titles** from
 
 ![Image Database Postman GET](static/images/database_image_upload.png)
 
+## Next Steps:
+
+- refactor unit tests for updated code
+- consolidate CSS and refactor margins, padding, etc from % to em
+
 ## 🎯 Features
 
 - 🔍 **Web Scraping**: Extracts Korean recipe titles from a CNN article.
